@@ -1,7 +1,7 @@
-var DataWindow = require('/DataWindow');
-var MatchesWindow = require('/MatchesWindow');
+var PlayersListWindow = require('/PlayersListWindow');
+var MatchesListWindow = require('/MatchesListWindow');
 var StadisticsWindow = require('/StadisticsWindow');
-var tabData;
+var tabPlayersList;
 var tabMatches;
 var tabStadistics;
 
@@ -9,27 +9,27 @@ exports.createTabGroup = function() {
 
 	var tabGroup = Ti.UI.createTabGroup();
 
-	var winData = DataWindow.create();
+	var winPlayersList = PlayersListWindow.create();
 
-	var winMatches = MatchesWindow.create();
+	var winMatchesList = MatchesListWindow.create();
 
 	var winStadistics = StadisticsWindow.create();
 
-	tabData = Ti.UI.createTab({
+	tabPlayersList = Ti.UI.createTab({
 		title : "Datos",
-		icon : "KS_nav_ui.png",
-		window : winData
+		icon : "/images/playersListIcon.png",
+		window : winPlayersList
 	});
 
-	tabMatches = Ti.UI.createTab({
+	tabMatchesList = Ti.UI.createTab({
 		title : "Partidos",
-		icon : "KS_nav_ui.png",
-		window : winMatches
+		icon : "/images/matchesIcon.png",
+		window : winMatchesList
 	});
 
 	tabStadistics = Ti.UI.createTab({
 		title : "Estadisticas",
-		icon : "KS_nav_views.png",
+		icon : "/images/stadisticsIcon.png",
 		window : winStadistics
 	});
 
@@ -37,8 +37,8 @@ exports.createTabGroup = function() {
 		alert('Tab ' + e.tab + 'ventana ' + e.win);
 	})
 
-	tabGroup.addTab(tabData);
-	tabGroup.addTab(tabMatches);
+	tabGroup.addTab(tabPlayersList);
+	tabGroup.addTab(tabMatchesList);
 	tabGroup.addTab(tabStadistics);
 
 	return tabGroup;
@@ -48,12 +48,12 @@ exports.createTabGroup = function() {
 exports.getTab = function(_args) {
 
 	switch (_args.tabName) {
-		case 'data':
-			return tabData;
+		case 'playersList':
+			return tabPlayersList;
 			break
 
 		case 'matches':
-			return tabMatches;
+			return tabMatchesList;
 			break
 
 		case 'Stadistics':

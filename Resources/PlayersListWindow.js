@@ -2,18 +2,23 @@ var Styles = require('/Styles');
 var Ui = require('/Ui');
 var PlayerDataWindow = require('/PlayerDataWindow');
 
+var win;
+
 exports.create = function() {
-	var win = Ti.UI.createWindow({
+	win = Ti.UI.createWindow({
 		backgroundColor : Styles.window.backgroundColor,
 		backgroundImage : Styles.window.backgroundImage,
-		title : "DATOS",
+		title : "JUGADORES",
 		layout : 'vertical'
 	});
 
-	var team = exports.createTeamSection();
+	//Crear Secciones
+	//var team = exports.createTeamSection();
 	var players = exports.createPlayersSection();
 
-	win.add(team);
+	//Añadir Secciones
+
+	//win.add(team);
 	win.add(players);
 
 	return win;
@@ -22,7 +27,7 @@ exports.create = function() {
 
 exports.createTeamSection = function() {
 	var viewTeamSection = Ti.UI.createView({
-		backgroundColor : '',
+		//backgroundColor : '',
 		top : '0',
 		height : Ti.UI.SIZE,
 		layout : 'vertical'
@@ -66,8 +71,8 @@ exports.createTeamSection = function() {
 
 exports.createPlayersSection = function() {
 	var viewPlayersSection = Ti.UI.createView({
-		backgroundColor : '',
-		//top : '0',
+		//backgroundColor : '',
+		top : '0',
 		height : Ti.UI.SIZE,
 		layout : 'vertical'
 
@@ -75,26 +80,31 @@ exports.createPlayersSection = function() {
 
 	// Headers
 
-	var labelTitle = Ui.createLabel({
-		text : 'Jugadoras',
-		type : 'header'
-	});
+	//	var labelTitle = Ui.createHeader({
+	//	type : 'header',
+	// image: 'headerPlayersList.png'
+	// });
 
 	//crear botón
 
-	var buttonAddPlayer = Ui.createButton({
-		title : 'Añadir jugadora'
+	var buttonAddPlayer = Ui.createIcon({
+		image : 'buttonAddPlayer.png',
+		type : 'header'
+
 	});
+
+	win.rightNavButton = buttonAddPlayer
 
 	//añadir evento al botón
 
-	buttonAddPlayer.addEventListener('touchstart', function(e) {
+	buttonAddPlayer.addEventListener('click', function(e) {//No funciona con touchstart
+		
 		var winPlayerData = PlayerDataWindow.create({
 			//playerData : e.rowData.playerData
 		});
 		var Tabs = require('/Tabs');
 		var currentTab = Tabs.getTab({
-			tabName : 'data'
+			tabName : 'playersList'
 		});
 
 		currentTab.open(winPlayerData);
@@ -104,16 +114,24 @@ exports.createPlayersSection = function() {
 	//crear TableView
 
 	var playersList = [{
-		name : 'Carmen Martín',
+		name : 'Carmen',
+		surname: 'Martín Pérez',
 		birthDate : '10/10/1983',
 		number : '7',
+		telephone: '619651115',
+		email:'carmenmartin_7@hotmail.com',
+		address: 'P. Juanito Cortés 13, 29013 Málaga',
 		weigth : '70',
 		heigth : '1,65',
 		id : '1'
 	}, {
-		name : 'Laura Plaza',
+		name : 'Laura',
+		surname: 'Plaza Moreno',
 		birthDate : '10/10/1984',
 		number : '19',
+		telephone: '619651115',
+		email:'carmenmartin_7@hotmail.com',
+		address: 'P. Juanito Cortés 13, 29013 Málaga',
 		weigth : '60',
 		heigth : '1,75',
 		id : '2'
@@ -121,7 +139,7 @@ exports.createPlayersSection = function() {
 	var dataTable = [];
 	for (var i = 0; i < playersList.length; i++) {
 		var row = Ti.UI.createTableViewRow({
-			title : playersList[i].name, //propiedad TI para que escriba algo en la row, las demás son nuestras
+			title : playersList[i].number + ' ' + playersList[i].surname + ' ' + playersList[i].name, //propiedad TI para que escriba algo en la row, las demás son nuestras
 			playerData : playersList[i],
 			editable : true
 		});
@@ -141,7 +159,7 @@ exports.createPlayersSection = function() {
 		});
 		var Tabs = require('/Tabs');
 		var currentTab = Tabs.getTab({
-			tabName : 'data'
+			tabName : 'playersList'
 		});
 
 		currentTab.open(winPlayerData);
@@ -151,8 +169,8 @@ exports.createPlayersSection = function() {
 
 	});
 
-	viewPlayersSection.add(labelTitle);
-	viewPlayersSection.add(buttonAddPlayer);
+	//viewPlayersSection.add(labelTitle);
+	//viewPlayersSection.add(buttonAddPlayer);
 	viewPlayersSection.add(tableView);
 
 	return viewPlayersSection;
