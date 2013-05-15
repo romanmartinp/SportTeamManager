@@ -98,7 +98,7 @@ exports.createPlayersSection = function() {
 	//añadir evento al botón
 
 	buttonAddPlayer.addEventListener('click', function(e) {//No funciona con touchstart
-		
+
 		var winPlayerData = PlayerDataWindow.create({
 			//playerData : e.rowData.playerData
 		});
@@ -113,44 +113,37 @@ exports.createPlayersSection = function() {
 
 	//crear TableView
 
-	var playersList = [{
-		name : 'Carmen',
-		surname: 'Martín Pérez',
-		birthDate : '10/10/1983',
-		number : '7',
-		telephone: '619651115',
-		email:'carmenmartin_7@hotmail.com',
-		address: 'P. Juanito Cortés 13, 29013 Málaga',
-		weigth : '70',
-		heigth : '1,65',
-		id : '1'
-	}, {
-		name : 'Laura',
-		surname: 'Plaza Moreno',
-		birthDate : '10/10/1984',
-		number : '19',
-		telephone: '619651115',
-		email:'carmenmartin_7@hotmail.com',
-		address: 'P. Juanito Cortés 13, 29013 Málaga',
-		weigth : '60',
-		heigth : '1,75',
-		id : '2'
-	}]
-	var dataTable = [];
-	for (var i = 0; i < playersList.length; i++) {
-		var row = Ti.UI.createTableViewRow({
-			title : playersList[i].number + ' ' + playersList[i].surname + ' ' + playersList[i].name, //propiedad TI para que escriba algo en la row, las demás son nuestras
-			playerData : playersList[i],
-			editable : true
-		});
-		dataTable.push(row);
-	};
+	Ti.App.addEventListener('playersList:updated', function(e) {
 
+		setTableData();
+	});
+	
 	var tableView = Ti.UI.createTableView({
-		data : dataTable,
+
 		editable : true
 
 	});
+
+	function setTableData() {
+
+		var playersList = Storage.getValue('playersList') || [];
+
+		var dataTable = [];
+		for (var i = 0; i < playersList.length; i++) {
+			var row = Ti.UI.createTableViewRow({
+				title : playersList[i].number + ' ' + playersList[i].surname + ' ' + playersList[i].name, //propiedad TI para que escriba algo en la row, las demás son nuestras
+				playerData : playersList[i],
+				editable : true
+			});
+			dataTable.push(row);
+		};
+
+
+		tableView.data = dataTable;
+
+	}
+
+	setTableData();
 
 	tableView.addEventListener('click', function(e) {
 

@@ -89,7 +89,7 @@ exports.createTextField = function(_args) {
 				top : _args.top || '5',
 				left : '0',
 				bottom : _args.bottom || '5',
-				//width : _args.width || Ti.UI.SIZE,
+				width : _args.width || '60%',
 				height : _args.height || Ti.UI.SIZE,
 				hintText : _args.hintText || ' ',
 				keyboardType : _args.keyboardType || Ti.UI.KEYBOARD_DEFAULT,
@@ -105,7 +105,7 @@ exports.createTextField = function(_args) {
 				top : _args.top || '5',
 				left : '0',
 				bottom : _args.bottom || '5',
-				//width : _args.width || '25%',
+				width : _args.width || '25%',
 				height : _args.height || Ti.UI.SIZE,
 				hintText : _args.hintText || ' ',
 				keyboardType : _args.keyboardType || Ti.UI.KEYBOARD_NUMBERS_PUNCTUATION,
@@ -180,10 +180,14 @@ exports.createFormRow = function(_args) {
 				editable : _args.editable || false
 			});
 
+			view.getValue = function() {
+
+				return tf.value;
+			}
 			view.add(label);
 			view.add(tf);
 			break;
-		
+
 		case 'text':
 
 			var label = exports.createLabel({
@@ -205,6 +209,11 @@ exports.createFormRow = function(_args) {
 				editable : _args.editable || false
 			});
 
+			view.getValue = function() {
+
+				return tf.value;
+			}
+
 			view.add(label);
 			view.add(tf);
 			break;
@@ -223,6 +232,10 @@ exports.createFormRow = function(_args) {
 				value : _args.value
 			});
 
+			view.getValue = function() {
+
+				return checkbox.value;
+			};
 			view.add(label);
 			view.add(checkbox);
 
@@ -246,7 +259,6 @@ exports.createSwitch = function(_args) {
 		title : _args.title,
 		titleOff : _args.titleOff,
 		titleOn : _args.titleOn
-		
 
 	});
 
